@@ -1,7 +1,8 @@
+using Domain.Watches.Enums;
 using Domain.Watches.ValueObjects;
 using SharedKernel;
 
-namespace Domain.Watches;
+namespace Domain.Watches.Entities;
 
 public sealed class WatchAggregate : Entity
 {

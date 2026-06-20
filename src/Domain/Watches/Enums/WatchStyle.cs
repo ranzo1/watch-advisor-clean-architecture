@@ -1,4 +1,4 @@
-namespace Domain.Watches;
+namespace Domain.Watches.Enums;
 
 public enum WatchStyle
 {

@@ -1,7 +1,8 @@
 using Domain.Shared.Services;
+using Domain.Watches.Errors;
 using SharedKernel;
 
-namespace Domain.Watches;
+namespace Domain.Watches.ValueObjects;
 
 public sealed record CaseDiameter
 {

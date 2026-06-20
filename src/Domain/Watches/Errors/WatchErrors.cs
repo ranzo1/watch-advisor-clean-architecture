@@ -1,6 +1,7 @@
+using Domain.Watches.ValueObjects;
 using SharedKernel;
 
-namespace Domain.Watches;
+namespace Domain.Watches.Errors;
 
 public static class WatchErrors
 {
