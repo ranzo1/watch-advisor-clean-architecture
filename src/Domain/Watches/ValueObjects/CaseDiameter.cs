@@ -1,3 +1,4 @@
+using Domain.Shared.Services;
 using SharedKernel;
 
 namespace Domain.Watches;

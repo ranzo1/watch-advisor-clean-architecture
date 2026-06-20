@@ -20,6 +20,18 @@ public static class WatchErrors
         "Watches.InvalidCaseDiameter",
         $"Case diameter must be between {CaseDiameter.MinMm} mm and {CaseDiameter.MaxMm} mm");
 
+    public static readonly Error InvalidCaseThickness = Error.Problem(
+        "Watches.InvalidCaseThickness",
+        "Case thickness must be greater than zero");
+
+    public static readonly Error InvalidLugWidth = Error.Problem(
+        "Watches.InvalidLugWidth",
+        "Lug width must be greater than zero");
+
+    public static readonly Error InvalidLugToLug = Error.Problem(
+        "Watches.InvalidLugToLug",
+        "Lug-to-lug distance must be greater than zero");
+
     public static readonly Error InvalidPrice = Error.Problem(
         "Watches.InvalidPrice",
         "Price must be greater than zero");

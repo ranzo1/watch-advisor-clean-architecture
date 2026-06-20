@@ -1,36 +1,31 @@
+using Domain.Watches.ValueObjects;
 using SharedKernel;
 
 namespace Domain.Watches;
 
-public sealed class Watch : Entity
+public sealed class WatchAggregate : Entity
 {
-    private Watch(
+    private WatchAggregate(
         Guid id,
         Brand brand,
         Model model,
-        string referenceNumber,
-        CaseDiameter caseDiameter,
-        decimal caseThicknessMm,
-        decimal lugWidthMm,
-        decimal lugToLugMm,
+        ReferenceNumber referenceNumber,
+        WatchDimensions dimensions,
         WatchStyle style,
         MovementType movement,
         WatchOccasion occasion,
         Price price,
-        string dialColor,
+        DialColor dialColor,
         CaseMaterial caseMaterial,
-        string braceletType,
+        BraceletType braceletType,
         Uri imageUrl,
-        string description)
+        Description? description)
         : base(id)
     {
         Brand = brand;
         Model = model;
         ReferenceNumber = referenceNumber;
-        CaseDiameter = caseDiameter;
-        CaseThicknessMm = caseThicknessMm;
-        LugWidthMm = lugWidthMm;
-        LugToLugMm = lugToLugMm;
+        Dimensions = dimensions;
         Style = style;
         Movement = movement;
         Occasion = occasion;
@@ -42,28 +37,25 @@ public sealed class Watch : Entity
         Description = description;
     }
 
-    private Watch()
+    private WatchAggregate()
     {
     }
 
     public Brand Brand { get; private set; } = null!;
     public Model Model { get; private set; } = null!;
-    public string ReferenceNumber { get; private set; } = string.Empty;
-    public CaseDiameter CaseDiameter { get; private set; } = null!;
-    public decimal CaseThicknessMm { get; private set; }
-    public decimal LugWidthMm { get; private set; }
-    public decimal LugToLugMm { get; private set; }
+    public ReferenceNumber ReferenceNumber { get; private set; }
+    public WatchDimensions Dimensions { get; private set; } = null!;
     public WatchStyle Style { get; private set; }
     public MovementType Movement { get; private set; }
     public WatchOccasion Occasion { get; private set; }
     public Price Price { get; private set; } = null!;
-    public string DialColor { get; private set; } = string.Empty;
+    public DialColor DialColor { get; private set; }
     public CaseMaterial CaseMaterial { get; private set; }
-    public string BraceletType { get; private set; } = string.Empty;
+    public BraceletType BraceletType { get; private set; }
     public Uri ImageUrl { get; private set; } = new Uri("about:blank");
-    public string Description { get; private set; } = string.Empty;
+    public Description? Description { get; private set; }
 
-    public static Result<Watch> Create(
+    public static Result<WatchAggregate> Create(
         string brand,
         string model,
         string referenceNumber,
@@ -77,56 +69,70 @@ public sealed class Watch : Entity
         decimal priceEur,
         string dialColor,
         CaseMaterial caseMaterial,
-        string braceletType,
+        BraceletType braceletType,
         Uri imageUrl,
-        string description)
+        string? description)
     {
         Result<Brand> brandResult = Brand.Create(brand);
         if (brandResult.IsFailure)
         {
-            return Result.Failure<Watch>(brandResult.Error);
+            return Result.Failure<WatchAggregate>(brandResult.Error);
         }
 
         Result<Model> modelResult = Model.Create(model);
         if (modelResult.IsFailure)
         {
-            return Result.Failure<Watch>(modelResult.Error);
+            return Result.Failure<WatchAggregate>(modelResult.Error);
         }
 
-        Result<CaseDiameter> diameterResult = CaseDiameter.Create(caseDiameterMm);
-        if (diameterResult.IsFailure)
+        Result<ReferenceNumber> referenceNumberResult = ReferenceNumber.Create(referenceNumber);
+        if (referenceNumberResult.IsFailure)
         {
-            return Result.Failure<Watch>(diameterResult.Error);
+            return Result.Failure<WatchAggregate>(referenceNumberResult.Error);
+        }
+
+        Result<WatchDimensions> dimensionsResult = WatchDimensions.Create(
+            caseDiameterMm, caseThicknessMm, lugWidthMm, lugToLugMm);
+        if (dimensionsResult.IsFailure)
+        {
+            return Result.Failure<WatchAggregate>(dimensionsResult.Error);
         }
 
         Result<Price> priceResult = Price.Create(priceEur);
         if (priceResult.IsFailure)
         {
-            return Result.Failure<Watch>(priceResult.Error);
+            return Result.Failure<WatchAggregate>(priceResult.Error);
         }
 
-        return new Watch(
+        Result<DialColor> dialColorResult = DialColor.Create(dialColor);
+        if (dialColorResult.IsFailure)
+        {
+            return Result.Failure<WatchAggregate>(dialColorResult.Error);
+        }
+
+        Description? watchDescription = string.IsNullOrWhiteSpace(description)
+            ? null
+            : new Description(description);
+
+        return new WatchAggregate(
             Guid.NewGuid(),
             brandResult.Value,
             modelResult.Value,
-            referenceNumber,
-            diameterResult.Value,
-            caseThicknessMm,
-            lugWidthMm,
-            lugToLugMm,
+            referenceNumberResult.Value,
+            dimensionsResult.Value,
             style,
             movement,
             occasion,
             priceResult.Value,
-            dialColor,
+            dialColorResult.Value,
             caseMaterial,
             braceletType,
             imageUrl,
-            description);
+            watchDescription);
     }
 
     public bool FitsWrist(decimal wristCircumferenceCm) =>
-        CaseDiameter.FitsWrist(wristCircumferenceCm);
+        Dimensions.FitsWrist(wristCircumferenceCm);
 
     public bool IsWithinBudget(decimal budgetEur) =>
         Price.IsWithinBudget(budgetEur);

@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
+using Domain.Users.ValueObjects;
 using SharedKernel;
 
 namespace Application.Users.Create;

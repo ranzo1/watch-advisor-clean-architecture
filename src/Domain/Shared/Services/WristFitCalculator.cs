@@ -1,4 +1,4 @@
-namespace Domain.Watches;
+namespace Domain.Shared.Services;
 
 public static class WristFitCalculator
 {

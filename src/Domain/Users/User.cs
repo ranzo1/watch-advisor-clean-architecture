@@ -1,4 +1,5 @@
-﻿using SharedKernel;
+﻿using Domain.Users.ValueObjects;
+using SharedKernel;
 
 namespace Domain.Users;
 
