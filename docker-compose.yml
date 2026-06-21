@@ -14,7 +14,7 @@ services:
     image: postgres:17
     container_name: postgres
     environment:
-      - POSTGRES_DB=flight-advisor-ca
+      - POSTGRES_DB=watch_advisor
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
@@ -25,6 +25,7 @@ services:
   seq:
     image: datalust/seq:latest
     container_name: seq
+    restart: always
     environment:
       - ACCEPT_EULA=Y
       - SEQ_FIRSTRUN_NOAUTHENTICATION=true

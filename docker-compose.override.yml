@@ -5,7 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__Database=Host=postgres;Port=5432;Database=flight-advisor-ca;Username=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Host=postgres;Port=5432;Database=watch_advisor;Username=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Cache=redis:6379
     ports:
       - "8080:8080"

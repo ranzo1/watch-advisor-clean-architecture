@@ -6,7 +6,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__Database": "Host=localhost;Port=5433;Database=flight-advisor-ca;Username=postgres;Password=postgres;Include Error Detail=true",
+        "ConnectionStrings__Database": "Host=localhost;Port=5433;Database=watch_advisor;Username=postgres;Password=postgres;Include Error Detail=true",
         "ConnectionStrings__Cache": "localhost:6379"
       },
       "dotnetRunMessages": true,
@@ -14,11 +14,11 @@
     },
     "https": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__Database": "Host=localhost;Port=5433;Database=flight-advisor-ca;Username=postgres;Password=postgres;Include Error Detail=true",
+        "ConnectionStrings__Database": "Host=localhost;Port=5433;Database=watch_advisor;Username=postgres;Password=postgres;Include Error Detail=true",
         "ConnectionStrings__Cache": "localhost:6379"
       },
       "dotnetRunMessages": true,

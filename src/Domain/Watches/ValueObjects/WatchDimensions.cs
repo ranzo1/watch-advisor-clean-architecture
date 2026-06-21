@@ -17,10 +17,12 @@ public sealed record WatchDimensions
         LugToLugMm = lugToLugMm;
     }
 
-    public CaseDiameter CaseDiameter { get; }
-    public decimal CaseThicknessMm { get; }
-    public decimal LugWidthMm { get; }
-    public decimal LugToLugMm { get; }
+    private WatchDimensions() { }
+
+    public CaseDiameter CaseDiameter { get; private set; } = null!;
+    public decimal CaseThicknessMm { get; private set; }
+    public decimal LugWidthMm { get; private set; }
+    public decimal LugToLugMm { get; private set; }
 
     public static Result<WatchDimensions> Create(
         decimal caseDiameterMm,

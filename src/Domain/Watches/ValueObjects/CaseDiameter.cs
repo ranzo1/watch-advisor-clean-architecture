@@ -11,7 +11,9 @@ public sealed record CaseDiameter
 
     private CaseDiameter(decimal mm) => Mm = mm;
 
-    public decimal Mm { get; }
+    private CaseDiameter() { }
+
+    public decimal Mm { get; private set; }
 
     public static Result<CaseDiameter> Create(decimal mm)
     {
