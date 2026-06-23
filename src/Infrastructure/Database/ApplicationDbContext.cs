@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Application.Abstractions.Data;
+using Domain.Collections;
 using Domain.Users;
 using Domain.Watches.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 {
     public DbSet<User> Users { get; set; }
     public DbSet<WatchAggregate> Watches { get; set; }
+    public DbSet<CollectionItem> CollectionItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

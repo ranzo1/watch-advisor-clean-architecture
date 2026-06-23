@@ -2,7 +2,9 @@
 using Application.Abstractions.Caching;
 using Application.Abstractions.Data;
 using Dapper;
+using Domain.Collections;
 using Domain.Users;
+using Domain.Watches;
 using Infrastructure.Authentication;
 using Infrastructure.Caching;
 using Infrastructure.Data;
@@ -61,6 +63,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IWatchRepository, WatchRepository>();
+        services.AddScoped<ICollectionRepository, CollectionRepository>();
 
         return services;
     }
@@ -80,6 +84,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserContext, UserContext>();
+
         services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
 
         services
